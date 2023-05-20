@@ -7,6 +7,4 @@ const validateLogin = async (req, _res, next) => {
     }
   };
   
-  module.exports = {
-    validateLogin,
-  };
+  module.exports = validateLogin

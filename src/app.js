@@ -1,16 +1,19 @@
-const express = require('express');
+const express = require("express");
 const userRoute = require('./routes/user');
-const { errorHandler } = require('./middlewares/error-middleware');
+const authController = require("./controllers/authController");
+const { errorHandler } = require("./middlewares/error-middleware");
+const validateLogin = require("./middlewares/validateLogin-middleware");
 
 const app = express();
 
-app.use(express.json());  // mova esta linha para cá
+app.use(express.json()); // mova esta linha para cá
 
-app.get('/', (_request, response) => {
+app.get("/", (_request, response) => {
   response.send();
 });
 
-app.use('/', userRoute);
+app.post("/login", validateLogin, authController.validateLogin);
+app.use('/user', userRoute);
 
 app.use(errorHandler);
 

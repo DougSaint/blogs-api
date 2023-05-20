@@ -1,9 +1,20 @@
-const { User } = require('../models');
-const jwt = require('jsonwebtoken');
+const { User } = require("../models");
 
-const validateLogin = async (email) => {
+const checkUserExists = async (email) => {
   const user = await User.findOne({ where: { email } });
-  return !!user;
+  if (user) {
+    return true;
+  }
+  return false;
 };
 
-module.exports = { validateLogin };
+const createUser = async (user) => {
+  const userExists = await checkUserExists(user.email);
+  if (!userExists) {
+    const newUser = await User.create(user);
+    return newUser;
+  }
+  return false;
+};
+
+module.exports = { createUser, checkUserExists };

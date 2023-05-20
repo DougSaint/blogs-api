@@ -1,17 +1,21 @@
 const userService = require("../services/userService");
-const jwt = require('jsonwebtoken');
+const authService = require("../services/AuthService");
 
-const validateLogin = async (req, res) => {
-  const userExists = await userService.validateLogin(req.body?.email);
-
-  if(!userExists){
-    return res.status(400).json({message: "Invalid fields"});
-  }else{
-    const token = jwt.sign({ userId: userExists.id }, process.env.JWT_SECRET, {
-      expiresIn: '1h',
-    });
-    return res.status(200).json({token: token})
+const checkUserExists = async (email) => {
+  const user = await User.findOne({ where: { email } });
+  if (user) {
+    return true;
   }
+  return false;
 };
 
-module.exports = { validateLogin };
+const createUser = async (req, res) => {
+  const token = await authService.generateToken(req.body.email);
+  const result = await userService.createUser(req.body);
+  if(!result){
+    return res.status(409).json({message: 'User already registered'});
+  }
+  return res.status(201).json({ token });
+};
+
+module.exports = { createUser, checkUserExists };
