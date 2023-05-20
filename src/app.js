@@ -1,18 +1,17 @@
 const express = require('express');
-
-// ...
+const userRoute = require('./routes/user');
+const { errorHandler } = require('./middlewares/error-middleware');
 
 const app = express();
 
-// não remova ou mova esse endpoint
+app.use(express.json());  // mova esta linha para cá
+
 app.get('/', (_request, response) => {
   response.send();
 });
 
-app.use(express.json());
+app.use('/', userRoute);
 
-// ...
+app.use(errorHandler);
 
-// É importante exportar a constante `app`,
-// para que possa ser utilizada pelo arquivo `src/server.js`
 module.exports = app;
