@@ -1,13 +1,7 @@
 const userService = require("../services/userService");
 const authService = require("../services/AuthService");
 
-const checkUserExists = async (email) => {
-  const user = await User.findOne({ where: { email } });
-  if (user) {
-    return true;
-  }
-  return false;
-};
+
 
 const createUser = async (req, res) => {
   const token = await authService.generateToken(req.body.email);
@@ -18,4 +12,16 @@ const createUser = async (req, res) => {
   return res.status(201).json({ token });
 };
 
-module.exports = { createUser, checkUserExists };
+const getUsers = async (req, res) => {
+  const result = await userService.getUsers()
+  const formmatedResult = result?.map((el) => ({
+    id: el.id,
+    displayName: el.displayName,
+    email: el.email,
+    image: el.image,
+  }));
+  res.status(200).json(formmatedResult);
+}
+
+module.exports = { createUser
+  , getUsers };

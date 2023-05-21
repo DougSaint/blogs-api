@@ -17,4 +17,9 @@ const createUser = async (user) => {
   return false;
 };
 
-module.exports = { createUser, checkUserExists };
+const getUsers = async () => {
+  const users = await User.findAll();
+  return users;
+}
+
+module.exports = { createUser, checkUserExists, getUsers };
