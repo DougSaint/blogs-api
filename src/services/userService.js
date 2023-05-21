@@ -22,4 +22,9 @@ const getUsers = async () => {
   return users;
 }
 
-module.exports = { createUser, checkUserExists, getUsers };
+const getUser = async (id) => {
+  const user = await User.findOne({ where: { id } });
+  return user;
+}
+
+module.exports = { createUser, checkUserExists, getUsers, getUser };
