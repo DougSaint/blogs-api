@@ -1,11 +1,8 @@
-const { User } = require("../models");
+const { User } = require('../models');
 
 const checkUserExists = async (email) => {
   const user = await User.findOne({ where: { email } });
-  if (user) {
-    return true;
-  }
-  return false;
+  return !!user;
 };
 
 const createUser = async (user) => {
@@ -20,11 +17,11 @@ const createUser = async (user) => {
 const getUsers = async () => {
   const users = await User.findAll();
   return users;
-}
+};
 
 const getUser = async (id) => {
   const user = await User.findOne({ where: { id } });
   return user;
-}
+};
 
 module.exports = { createUser, checkUserExists, getUsers, getUser };

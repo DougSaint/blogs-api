@@ -1,9 +1,8 @@
-const { User } = require('../models');
 const jwt = require('jsonwebtoken');
 const { checkUserExists } = require('./userService');
 
 const validateLogin = async (email) => {
-  const user = await checkUserExists(email)
+  const user = await checkUserExists(email);
   return user;
 };
 
@@ -12,6 +11,6 @@ const generateToken = async (id) => {
     expiresIn: '1h',
   });
   return token;
-}
+};
 
 module.exports = { validateLogin, generateToken };
