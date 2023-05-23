@@ -24,4 +24,8 @@ const getUser = async (id) => {
   return user;
 };
 
-module.exports = { createUser, checkUserExists, getUsers, getUser };
+const getUserByEmail = async (email) => {
+  const user = await User.findOne({ where: { email } });
+  return user.dataValues.id;
+};
+module.exports = { createUser, checkUserExists, getUsers, getUser, getUserByEmail };

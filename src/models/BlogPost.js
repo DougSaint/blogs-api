@@ -16,8 +16,8 @@ const BlogPostSchema = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      published: DataTypes.DATE,
-      updated: DataTypes.DATE,
+      published: {type: DataTypes.DATE, defaultValue: DataTypes.NOW},
+      updated: {type: DataTypes.DATE, defaultValue: DataTypes.NOW}
     },
     {
       timestamps: false,
